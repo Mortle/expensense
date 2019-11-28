@@ -19,11 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void connectDB();
-
 private:
     Ui::MainWindow *ui;
-
-    QSqlDatabase database;
 };
 #endif // MAINWINDOW_H
