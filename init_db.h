@@ -8,6 +8,7 @@ QVariant add_user(QSqlQuery &q, const QString &email, const QString &username,
     q.addBindValue(email);
     q.addBindValue(username);
     q.addBindValue(password);
+    q.addBindValue(QDateTime::currentDateTime().toString());
     q.exec();
     return q.lastInsertId();
 }
@@ -19,6 +20,7 @@ QVariant add_category(QSqlQuery &q, const QString &name, int user_id,
     q.addBindValue(expense);
     q.addBindValue(income);
     q.addBindValue(description);
+    q.addBindValue(QDateTime::currentDateTime().toString());
     q.exec();
     return q.lastInsertId();
 }
@@ -29,35 +31,36 @@ QVariant add_operation(QSqlQuery &q, int category_id, int value,
     q.addBindValue(user_id);
     q.addBindValue(value);
     q.addBindValue(description);
+    q.addBindValue(QDateTime::currentDateTime().toString());
     q.exec();
     return q.lastInsertId();
 }
 
 const auto USERS_SQL = QLatin1String(R"(
     create table users(id integer primary key, email varchar,
-                        username varchar, password varchar)
+                        username varchar, password varchar, created_at varchar)
     )");
 
 const auto OPERATIONS_SQL = QLatin1String(R"(
     create table operations(id integer primary key, category_id integer, user_id integer,
-                            value int, description varchar)
+                            value int, description varchar, created_at varchar)
     )");
 
 const auto CATEGORIES_SQL = QLatin1String(R"(
     create table categories(id integer primary key, name varchar, user_id integer,
-                            expense boolean, income boolean, description varchar)
+                            expense boolean, income boolean, description varchar, created_at varchar)
     )");
 
 const auto INSERT_USER_SQL = QLatin1String(R"(
-    insert into users(email, username, password) values(?, ?, ?)
+    insert into users(email, username, password, created_at) values(?, ?, ?, ?)
     )");
 
 const auto INSERT_OPERATION_SQL = QLatin1String(R"(
-    insert into operations(category_id, user_id, value, description) values(?, ?, ?, ?)
+    insert into operations(category_id, user_id, value, description, created_at) values(?, ?, ?, ?, ?)
     )");
 
 const auto INSERT_CATEGORY_SQL = QLatin1String(R"(
-    insert into categories(name, user_id, expense, income, description) values(?, ?, ?, ?, ?)
+    insert into categories(name, user_id, expense, income, description, created_at) values(?, ?, ?, ?, ?, ?)
     )");
 
 QSqlError init_db() {
