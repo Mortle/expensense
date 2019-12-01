@@ -21,7 +21,6 @@ public slots:
 
 private:
     Ui::UsersWidget *ui;
-    QSqlDatabase database;
     QSqlQueryModel *model;
 };
 

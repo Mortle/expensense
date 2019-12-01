@@ -4,9 +4,6 @@ UsersWidget::UsersWidget(QWidget *parent) : QWidget(parent)
 {
     ui->setupUi(this);
 
-//    database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName("development.db");
-
     model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM users");
 
@@ -14,6 +11,5 @@ UsersWidget::UsersWidget(QWidget *parent) : QWidget(parent)
 }
 
 UsersWidget::~UsersWidget(){
-    database.close();
     delete ui;
 }
