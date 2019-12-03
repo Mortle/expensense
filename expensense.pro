@@ -21,6 +21,7 @@ SOURCES += \
     userswidget.cpp
 
 HEADERS += \
+    CRUD.h \
     init_db.h \
     mainwindow.h \
     userswidget.h
