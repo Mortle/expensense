@@ -8,7 +8,7 @@ class DatabaseConnector
 public:
     DatabaseConnector();
 
-    QVariant create_user(const QString &email, const QString &username, const QString &password);
+    QVariant create_user(const QString &username, const QString &password);
     QVariant create_category(const QString &name, int user_id, bool expense, bool income, const QString &description);
     void update_category(int id, const QString &name, const QString &description);
     void remove_category(int id);

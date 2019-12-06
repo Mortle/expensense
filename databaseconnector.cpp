@@ -2,16 +2,15 @@
 
 DatabaseConnector::DatabaseConnector() {}
 
-QVariant DatabaseConnector::create_user(const QString &email, const QString &username, const QString &password) {
+QVariant DatabaseConnector::create_user(const QString &username, const QString &password) {
     //TODO: reject if username already exists
     //TODO: email validation
     //TODO: username, password validatios
     const auto sql = QLatin1String(R"(
-        insert into users(email, username, password, created_at) values(?, ?, ?, ?)
+        insert into users(username, password, created_at) values(?, ?, ?, ?)
         )");
     QSqlQuery q;
     q.prepare(sql);
-    q.addBindValue(email);
     q.addBindValue(username);
     q.addBindValue(password);
     q.addBindValue(QDateTime::currentDateTime().toString());

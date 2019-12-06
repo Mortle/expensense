@@ -4,8 +4,7 @@
 DatabaseCreator::DatabaseCreator()
 {
     createUsersTableSql = QLatin1String(R"(
-        create table users(id integer primary key, email varchar,
-                            username varchar, password varchar, created_at varchar)
+        create table users(id integer primary key, username varchar, password varchar, created_at varchar)
         )");
 
     createOperationsTableSql = QLatin1String(R"(
@@ -52,12 +51,9 @@ QSqlError DatabaseCreator::initializeDatabase() {
 
     DatabaseConnector database;
 
-    database.create_user(QLatin1String("dima.osipov2000@mail.ru"), QLatin1String("Dmitry Osipov"),
-             QLatin1String("AMz6J34Mg&zJ9@MC"));
-    database.create_user(QLatin1String("3vinogradof@gmail.com"), QLatin1String("Alexander Vinogradov"),
-             QLatin1String("boomer"));
-    database.create_user(QLatin1String("duleba2018@gmail.com"), QLatin1String("Valery Duleba"),
-             QLatin1String("e3LQ6T&Eh6kp-J&6"));
+    database.create_user(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
+    database.create_user(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
+    database.create_user(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
 
     database.create_category(QLatin1String("Other"), 0, true, false, QLatin1String(""));
     database.create_category(QLatin1String("Cafe"), 0, true, false, QLatin1String(""));
