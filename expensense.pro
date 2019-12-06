@@ -16,12 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    databaseconnector.cpp \
+    databasecreator.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    CRUD.h \
-    init_db.h \
+    databaseconnector.h \
+    databasecreator.h \
     mainwindow.h
 
 FORMS += \

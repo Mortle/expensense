@@ -25,6 +25,8 @@ private slots:
 
     void on_logoutPushButton_clicked();
 
+    void on_registerPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

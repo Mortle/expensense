@@ -1,11 +1,10 @@
-#include "init_db.h"
+#include "databasecreator.h"
 #include "mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    init_db();
-
+    DatabaseCreator db;
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

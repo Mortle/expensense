@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="main">
        <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -37,7 +37,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>3</number>
           </property>
           <property name="usesScrollButtons">
            <bool>false</bool>
@@ -122,7 +122,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit"/>
+              <widget class="QLineEdit" name="loginUsername"/>
              </item>
              <item>
               <widget class="QLabel" name="label_2">
@@ -132,7 +132,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_2">
+              <widget class="QLineEdit" name="loginPassword">
                <property name="echoMode">
                 <enum>QLineEdit::Password</enum>
                </property>
@@ -165,7 +165,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_3"/>
+              <widget class="QLineEdit" name="registerUsername"/>
              </item>
              <item>
               <widget class="QLabel" name="label_4">
@@ -175,7 +175,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_4">
+              <widget class="QLineEdit" name="registerPassword">
                <property name="echoMode">
                 <enum>QLineEdit::Password</enum>
                </property>
@@ -189,7 +189,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_5">
+              <widget class="QLineEdit" name="registerConfirmPassword">
                <property name="echoMode">
                 <enum>QLineEdit::Password</enum>
                </property>
