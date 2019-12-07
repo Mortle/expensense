@@ -12,7 +12,7 @@ private:
 public:
     DatabaseCreator();
 
-    QSqlError initializeDatabase();
+    QSqlError initializeDatabase(QString dbName);
 };
 
 #endif // DATABASECREATOR_H

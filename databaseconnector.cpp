@@ -2,6 +2,18 @@
 
 DatabaseConnector::DatabaseConnector() {}
 
+DatabaseConnector::DatabaseConnector(QLatin1String usersQuery, QLatin1String incomeQuery,
+                                     QLatin1String expenseQuery, QLatin1String operationsQuery) {
+    usersModel = new QSqlQueryModel;
+    usersModel->setQuery(usersQuery);
+    incomeModel = new QSqlQueryModel;
+    incomeModel->setQuery(incomeQuery);
+    expenseModel = new QSqlQueryModel;
+    expenseModel->setQuery(expenseQuery);
+    operationsModel = new QSqlQueryModel;
+    operationsModel->setQuery(operationsQuery);
+}
+
 QVariant DatabaseConnector::create_user(const QString &username, const QString &password) {
     //TODO: reject if username already exists
     //TODO: email validation
@@ -85,4 +97,20 @@ void DatabaseConnector::remove_operation(int id) {
     q.prepare("DELETE FROM operations WHERE id = ?");
     q.addBindValue(id);
     q.exec();
+}
+
+QSqlQueryModel* DatabaseConnector::getIncomeModel(){
+    return incomeModel;
+}
+
+QSqlQueryModel* DatabaseConnector::getExpenseModel(){
+    return expenseModel;
+}
+
+QSqlQueryModel* DatabaseConnector::getUsersModel(){
+    return usersModel;
+}
+
+QSqlQueryModel* DatabaseConnector::getOperationsModel(){
+    return operationsModel;
 }

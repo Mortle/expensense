@@ -1,6 +1,6 @@
 #include "mainwindow.h"
+#include "databaseconnector.h"
 #include "ui_mainwindow.h"
-#include <QSqlQueryModel>
 #include <QtSql>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -9,17 +9,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    auto incomeModel = new QSqlQueryModel();
-    incomeModel->setQuery("SELECT name, description, created_at FROM categories WHERE income = 1");
-    ui->incomeTableView->setModel(incomeModel);
+    auto incomeQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 1");
+    auto expenseQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 0");
+    auto usersQuery = QLatin1String("SELECT * FROM users");
+    auto operationsQuery = QLatin1String("SELECT * FROM operations");
 
-    auto expenseModel = new QSqlQueryModel();
-    expenseModel->setQuery("SELECT name, description, created_at FROM categories WHERE income = 0");
-    ui->expenseTableView->setModel(expenseModel);
+    DatabaseConnector db(usersQuery, incomeQuery, expenseQuery, operationsQuery);
 
-    auto operationsModel = new QSqlQueryModel();
-    operationsModel->setQuery("SELECT * FROM operations");
-    ui->operationsTableView->setModel(operationsModel);
+    ui->incomeTableView->setModel(db.getIncomeModel());
+    ui->expenseTableView->setModel(db.getExpenseModel());
+    ui->operationsTableView->setModel(db.getOperationsModel());
 }
 
 MainWindow::~MainWindow()

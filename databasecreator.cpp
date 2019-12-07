@@ -17,14 +17,14 @@ DatabaseCreator::DatabaseCreator()
                                 expense boolean, income boolean, description varchar, created_at varchar)
         )");
 
-    initializeDatabase();
+    initializeDatabase("development.db");
 }
 
-QSqlError DatabaseCreator::initializeDatabase() {
+QSqlError DatabaseCreator::initializeDatabase(QString dbName) {
     // Initializing SQLite database
 
     auto db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("development.db");
+    db.setDatabaseName(dbName);
 
     if(!db.open())
         return db.lastError();

@@ -1,0 +1,14 @@
+1) Localization (QDate depends on QLocale) -- prolly have to make it :en only
+2) Different currencies (store value as $ and convert it) Google.com: manage Qt currencies
+
+4) Some metrics widget
+
+
+!!! 5) current_user method
+        modify :create actions
+
+
+6) #TODO
+7) edit file naming
+8) helper class for MainWindow()
+   incomeModel() expenseModel() operationsModel() -- pass query as argument
