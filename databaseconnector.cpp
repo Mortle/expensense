@@ -20,6 +20,7 @@ QVariant DatabaseConnector::createUser(const QString &username, const QString &p
     //TODO: username, password validatios
     const auto sql = QLatin1String(R"(
         insert into users(username, password, created_at) values(?, ?, ?, ?)
+        insert into users(username, password, created_at) values(?, ?, ?)
         )");
     QSqlQuery q;
     q.prepare(sql);
