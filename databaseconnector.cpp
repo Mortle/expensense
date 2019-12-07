@@ -14,7 +14,7 @@ DatabaseConnector::DatabaseConnector(QLatin1String usersQuery, QLatin1String inc
     operationsModel->setQuery(operationsQuery);
 }
 
-QVariant DatabaseConnector::create_user(const QString &username, const QString &password) {
+QVariant DatabaseConnector::createUser(const QString &username, const QString &password) {
     //TODO: reject if username already exists
     //TODO: email validation
     //TODO: username, password validatios
@@ -30,7 +30,7 @@ QVariant DatabaseConnector::create_user(const QString &username, const QString &
     return q.lastInsertId();
 }
 
-QVariant DatabaseConnector::create_category(const QString &name, int user_id, bool expense, bool income, const QString &description) {
+QVariant DatabaseConnector::createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description) {
     //TODO: reject if (name, expense, income) already exists
     //TODO: desc. length validation
     const auto sql = QLatin1String(R"(
@@ -48,7 +48,9 @@ QVariant DatabaseConnector::create_category(const QString &name, int user_id, bo
     return q.lastInsertId();
 }
 
-void DatabaseConnector::update_category(int id, const QString &name, const QString &description) {
+void DatabaseConnector::updateCategory(int id, const QString &name, const QString &description) {
+    //TODO: reject if (name, expense, income) already exists
+    //TODO: desc. length validation
     QSqlQuery q;
     q.prepare("UPDATE categories SET name = ?, description = ? WHERE id = ?");
     q.addBindValue(name);
@@ -57,7 +59,7 @@ void DatabaseConnector::update_category(int id, const QString &name, const QStri
     q.exec();
 }
 
-void DatabaseConnector::remove_category(int id) {
+void DatabaseConnector::removeCategory(int id) {
     //TODO: remove all operations with category_id === id
     //TODO: QMessageBox warning: all operations will be deleted
     QSqlQuery q;
@@ -66,7 +68,7 @@ void DatabaseConnector::remove_category(int id) {
     q.exec();
 }
 
-QVariant DatabaseConnector::create_operation(int category_id, int value, int user_id, const QString &description) {
+QVariant DatabaseConnector::createOperation(int category_id, int value, int user_id, const QString &description) {
     //TODO: category_id exists? validation
     //TODO: desc. length validation
     //TODO: value validation
@@ -81,7 +83,7 @@ QVariant DatabaseConnector::create_operation(int category_id, int value, int use
     return q.lastInsertId();
 }
 
-void DatabaseConnector::update_operation(int id, int category_id, int value, const QString &description) {
+void DatabaseConnector::updateOperation(int id, int category_id, int value, const QString &description) {
     //TODO: new categody_id exists? validation
     QSqlQuery q;
     q.prepare("UPDATE operations SET category_id = ?, description= ?, value = ? WHERE id = ?");
@@ -92,7 +94,7 @@ void DatabaseConnector::update_operation(int id, int category_id, int value, con
     q.exec();
 }
 
-void DatabaseConnector::remove_operation(int id) {
+void DatabaseConnector::removeOperation(int id) {
     QSqlQuery q;
     q.prepare("DELETE FROM operations WHERE id = ?");
     q.addBindValue(id);
@@ -114,3 +116,4 @@ QSqlQueryModel* DatabaseConnector::getUsersModel(){
 QSqlQueryModel* DatabaseConnector::getOperationsModel(){
     return operationsModel;
 }
+

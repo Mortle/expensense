@@ -46,7 +46,7 @@ void MainWindow::on_registerPushButton_clicked()
 //    if(!QString::compare(ui->registerPassword->text(), ui->registerConfirmPassword->text())
 //       && password_valid(ui->registerPassword->text()) // delete, this logic must be written in CRUD
 //       && username_valid(ui->registerUsername->text())) {
-//        if (create_user("remove email option later", ui->registerUsername->text(),
+//        if (createUser("remove email option later", ui->registerUsername->text(),
 //                    ui->registerPassword->text())) {
 
 //        } else {

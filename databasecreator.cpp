@@ -51,17 +51,17 @@ QSqlError DatabaseCreator::initializeDatabase(QString dbName) {
 
     DatabaseConnector database;
 
-    database.create_user(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
-    database.create_user(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
-    database.create_user(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
+    database.createUser(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
+    database.createUser(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
+    database.createUser(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
 
-    database.create_category(QLatin1String("Other"), 0, true, false, QLatin1String(""));
-    database.create_category(QLatin1String("Cafe"), 0, true, false, QLatin1String(""));
-    database.create_category(QLatin1String("Rent"), 0, true, false, QLatin1String(""));
-    database.create_category(QLatin1String("Food"), 0, true, false, QLatin1String(""));
-    database.create_category(QLatin1String("Entertainment"), 0, true, false, QLatin1String(""));
-    database.create_category(QLatin1String("Salary"), 0, false, true, QLatin1String(""));
-    database.create_category(QLatin1String("Scholarship"), 0, false, true, QLatin1String(""));
+    database.createCategory(QLatin1String("Other"), 0, true, false, QLatin1String(""));
+    database.createCategory(QLatin1String("Cafe"), 0, true, false, QLatin1String(""));
+    database.createCategory(QLatin1String("Rent"), 0, true, false, QLatin1String(""));
+    database.createCategory(QLatin1String("Food"), 0, true, false, QLatin1String(""));
+    database.createCategory(QLatin1String("Entertainment"), 0, true, false, QLatin1String(""));
+    database.createCategory(QLatin1String("Salary"), 0, false, true, QLatin1String(""));
+    database.createCategory(QLatin1String("Scholarship"), 0, false, true, QLatin1String(""));
 
     return QSqlError();
 }
