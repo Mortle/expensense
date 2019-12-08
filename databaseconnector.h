@@ -30,6 +30,9 @@ public:
     QSqlQueryModel* getOperationsModel();
 
     static bool validateUser(const QString &username, const QString &password);
+    static bool validateCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
+    static bool validateOperation(int category_id, int value, int user_id, const QString &description);
+
     static int signIn(const QString &username, const QString &password);
 };
 

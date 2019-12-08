@@ -26,8 +26,6 @@ QVariant DatabaseConnector::createUser(const QString &username, const QString &p
 }
 
 QVariant DatabaseConnector::createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description) {
-    //TODO: reject if (name, expense, income) already exists
-    //TODO: desc. length validation
     const auto sql = QLatin1String(R"(
         insert into categories(name, user_id, expense, income, description, created_at) values(?, ?, ?, ?, ?, ?)
         )");
@@ -44,8 +42,6 @@ QVariant DatabaseConnector::createCategory(const QString &name, int user_id, boo
 }
 
 void DatabaseConnector::updateCategory(int id, const QString &name, const QString &description) {
-    //TODO: reject if (name, expense, income) already exists
-    //TODO: desc. length validation
     QSqlQuery q;
     q.prepare("UPDATE categories SET name = ?, description = ? WHERE id = ?");
     q.addBindValue(name);
@@ -55,8 +51,6 @@ void DatabaseConnector::updateCategory(int id, const QString &name, const QStrin
 }
 
 void DatabaseConnector::removeCategory(int id) {
-    //TODO: remove all operations with category_id === id
-    //TODO: QMessageBox warning: all operations will be deleted
     QSqlQuery q;
     q.prepare("DELETE FROM categories WHERE id = ?");
     q.addBindValue(id);
@@ -64,9 +58,6 @@ void DatabaseConnector::removeCategory(int id) {
 }
 
 QVariant DatabaseConnector::createOperation(int category_id, int value, int user_id, const QString &description) {
-    //TODO: category_id exists? validation
-    //TODO: desc. length validation
-    //TODO: value validation
     QSqlQuery q;
     q.prepare("insert into operations(category_id, user_id, value, description, created_at) values(?, ?, ?, ?, ?)");
     q.addBindValue(category_id);
@@ -134,6 +125,82 @@ bool DatabaseConnector::validateUser(const QString &username, const QString &pas
     }
 }
 
+bool DatabaseConnector::validateCategory(const QString &name, int user_id, bool expense, bool income, const QString &description) {
+    // Avoid category duplication
+
+    QSqlQuery query;
+    query.exec("SELECT name, user_id, expense, income FROM categories");
+    while(query.next()) {
+        QString _name = query.value(0).toString();
+        int _user_id = query.value(1).toInt();
+        bool _expense = query.value(2).toInt();
+        bool _income = query.value(3).toInt();
+
+        if (!QString::compare(name, _name) && user_id == _user_id
+            && expense == _expense && income == _income) {
+            return false;
+        }
+    }
+
+    // User existence validation
+
+    query.exec("SELECT id FROM users");
+    bool exists = false;
+    while(query.next()) {
+        int _id = query.value(0).toInt();
+        if (user_id == _id)
+            exists = true;
+    }
+    if (exists == false)
+        return false;
+
+    // Name & Description text validation
+
+    if(name.length() < 16 && name.length() > 0 &&
+       description.length() < 128) {
+    } else {
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseConnector::validateOperation(int category_id, int value, int user_id, const QString &description) {
+    // Category existence validation
+
+    QSqlQuery query;
+    query.exec("SELECT id FROM categories");
+    bool exists = false;
+    while(query.next()) {
+        int _id = query.value(0).toInt();
+        if (category_id == _id)
+            exists = true;
+    }
+    if (exists == false)
+        return false;
+
+    // User existence validation
+
+    query.exec("SELECT id FROM users");
+    exists = false;
+    while(query.next()) {
+        int _id = query.value(0).toInt();
+        if (user_id == _id)
+            exists = true;
+    }
+    if (exists == false)
+        return false;
+
+
+    // Value & Description data validation
+
+    if(value > 0 && description.length() < 32) {
+    } else {
+        return false;
+    }
+
+    return true;
+}
 
 int DatabaseConnector::signIn(const QString &username, const QString &password)
 {
