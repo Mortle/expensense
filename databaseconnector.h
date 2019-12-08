@@ -28,6 +28,9 @@ public:
     QSqlQueryModel* getExpenseModel();
     QSqlQueryModel* getUsersModel();
     QSqlQueryModel* getOperationsModel();
+
+    static bool validateUser(const QString &username, const QString &password);
+    static int signIn(const QString &username, const QString &password);
 };
 
 #endif // DATABASECONNECTOR_H

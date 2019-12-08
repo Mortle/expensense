@@ -29,5 +29,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    int currentUserId;
 };
 #endif // MAINWINDOW_H

@@ -28,12 +28,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loginPushButton_clicked()
 {
-    if(1 /* !QString::compare(ui->loginPassword->text(), "gucci") */) {
+    currentUserId = DatabaseConnector::signIn(ui->loginUsername->text(), ui->loginPassword->text());
+    if(currentUserId) {
         ui->stackedWidget->setCurrentIndex(0);
-        // set_current_user(username);
+
+        ui->statusbar->setStyleSheet("color: #008000");
+        ui->statusbar->showMessage("Logged in successfully", 10000);
     } else {
-        // error in status bar
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Entered data is not valid. Please, try again", 10000);
     }
+
+    // Clear line edits text
+
+    ui->loginUsername->setText("");
+    ui->loginPassword->setText("");
 }
 
 void MainWindow::on_logoutPushButton_clicked()
@@ -43,17 +52,21 @@ void MainWindow::on_logoutPushButton_clicked()
 
 void MainWindow::on_registerPushButton_clicked()
 {
-//    if(!QString::compare(ui->registerPassword->text(), ui->registerConfirmPassword->text())
-//       && password_valid(ui->registerPassword->text()) // delete, this logic must be written in CRUD
-//       && username_valid(ui->registerUsername->text())) {
-//        if (createUser("remove email option later", ui->registerUsername->text(),
-//                    ui->registerPassword->text())) {
+    if(DatabaseConnector::validateUser(ui->registerUsername->text(), ui->registerPassword->text())
+       && !QString::compare(ui->registerPassword->text(), ui->registerConfirmPassword->text())) {
 
-//        } else {
+        DatabaseConnector::createUser(ui->registerUsername->text(), ui->registerPassword->text());
 
-//        }
-//        // account was created, please sign in
-//    } else {
-//        // entered data is not valid, try again
-//    }
+        ui->statusbar->setStyleSheet("color: #008000");
+        ui->statusbar->showMessage("Your account has been successfully created. Please, sign in to continue", 10000);
+    } else {
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Entered data is not valid or entered username already exists. Please, try again", 10000);
+    }
+
+    // Clear line edits text
+
+    ui->registerUsername->setText("");
+    ui->registerPassword->setText("");
+    ui->registerConfirmPassword->setText("");
 }

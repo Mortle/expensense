@@ -112,3 +112,40 @@ QSqlQueryModel* DatabaseConnector::getOperationsModel() {
     return operationsModel;
 }
 
+bool DatabaseConnector::validateUser(const QString &username, const QString &password)
+{
+    // Avoid username duplication
+
+    QSqlQuery query;
+    query.exec("SELECT username FROM users");
+    while(query.next()) {
+        QString _username = query.value(0).toString();
+        if (!QString::compare(username, _username))
+            return false;
+    }
+
+    // Username & Password data validation
+
+    if(username.length() < 16 && username.length() > 3 &&
+       password.length() < 16 && password.length() > 3) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+int DatabaseConnector::signIn(const QString &username, const QString &password)
+{
+    QSqlQuery query;
+    query.exec("SELECT id, username, password FROM users");
+    while(query.next()) {
+        int _id = query.value(0).toInt();
+        QString _username = query.value(1).toString();
+        QString _password = query.value(2).toString();
+        if (!QString::compare(username, _username) && !QString::compare(password, _password)) {
+            return _id;
+        }
+    }
+    return 0;
+}
