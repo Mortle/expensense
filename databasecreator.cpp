@@ -49,19 +49,17 @@ QSqlError DatabaseCreator::initializeDatabase(QString dbName) {
 
     // Seeding db with sample data
 
-    DatabaseConnector database;
+    DatabaseConnector::createUser(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
+    DatabaseConnector::createUser(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
+    DatabaseConnector::createUser(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
 
-    database.createUser(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
-    database.createUser(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
-    database.createUser(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
-
-    database.createCategory(QLatin1String("Other"), 0, true, false, QLatin1String(""));
-    database.createCategory(QLatin1String("Cafe"), 0, true, false, QLatin1String(""));
-    database.createCategory(QLatin1String("Rent"), 0, true, false, QLatin1String(""));
-    database.createCategory(QLatin1String("Food"), 0, true, false, QLatin1String(""));
-    database.createCategory(QLatin1String("Entertainment"), 0, true, false, QLatin1String(""));
-    database.createCategory(QLatin1String("Salary"), 0, false, true, QLatin1String(""));
-    database.createCategory(QLatin1String("Scholarship"), 0, false, true, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Other"), 0, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Cafe"), 0, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Rent"), 0, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Food"), 0, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Entertainment"), 0, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Salary"), 0, false, true, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Scholarship"), 0, false, true, QLatin1String(""));
 
     return QSqlError();
 }

@@ -1,7 +1,5 @@
 #include "databaseconnector.h"
 
-DatabaseConnector::DatabaseConnector() {}
-
 DatabaseConnector::DatabaseConnector(QLatin1String usersQuery, QLatin1String incomeQuery,
                                      QLatin1String expenseQuery, QLatin1String operationsQuery) {
     usersModel = new QSqlQueryModel;
@@ -15,11 +13,7 @@ DatabaseConnector::DatabaseConnector(QLatin1String usersQuery, QLatin1String inc
 }
 
 QVariant DatabaseConnector::createUser(const QString &username, const QString &password) {
-    //TODO: reject if username already exists
-    //TODO: email validation
-    //TODO: username, password validatios
     const auto sql = QLatin1String(R"(
-        insert into users(username, password, created_at) values(?, ?, ?, ?)
         insert into users(username, password, created_at) values(?, ?, ?)
         )");
     QSqlQuery q;
@@ -102,19 +96,19 @@ void DatabaseConnector::removeOperation(int id) {
     q.exec();
 }
 
-QSqlQueryModel* DatabaseConnector::getIncomeModel(){
+QSqlQueryModel* DatabaseConnector::getIncomeModel() {
     return incomeModel;
 }
 
-QSqlQueryModel* DatabaseConnector::getExpenseModel(){
+QSqlQueryModel* DatabaseConnector::getExpenseModel() {
     return expenseModel;
 }
 
-QSqlQueryModel* DatabaseConnector::getUsersModel(){
+QSqlQueryModel* DatabaseConnector::getUsersModel() {
     return usersModel;
 }
 
-QSqlQueryModel* DatabaseConnector::getOperationsModel(){
+QSqlQueryModel* DatabaseConnector::getOperationsModel() {
     return operationsModel;
 }
 
