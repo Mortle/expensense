@@ -21,7 +21,7 @@ public:
     static void updateCategory(int id, const QString &name, const QString &description);
     static void removeCategory(int id);
     static QVariant createOperation(int category_id, int value, int user_id, const QString &description);
-    static void updateOperation(int id, int category_id, int value, const QString &description);
+    static void updateOperation(int id, int value, const QString &description);
     static void removeOperation(int id);
 
     QSqlQueryModel* getIncomeModel();

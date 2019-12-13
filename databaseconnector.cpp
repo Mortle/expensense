@@ -69,11 +69,9 @@ QVariant DatabaseConnector::createOperation(int category_id, int value, int user
     return q.lastInsertId();
 }
 
-void DatabaseConnector::updateOperation(int id, int category_id, int value, const QString &description) {
-    //TODO: new categody_id exists? validation
+void DatabaseConnector::updateOperation(int id, int value, const QString &description) {
     QSqlQuery q;
-    q.prepare("UPDATE operations SET category_id = ?, description= ?, value = ? WHERE id = ?");
-    q.addBindValue(category_id);
+    q.prepare("UPDATE operations SET description= ?, value = ? WHERE id = ?");
     q.addBindValue(description);
     q.addBindValue(value);
     q.addBindValue(id);

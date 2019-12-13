@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Adding model-views
+
     auto incomeQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 1");
     auto expenseQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 0");
     auto usersQuery = QLatin1String("SELECT * FROM users");
@@ -69,4 +71,112 @@ void MainWindow::on_registerPushButton_clicked()
     ui->registerUsername->setText("");
     ui->registerPassword->setText("");
     ui->registerConfirmPassword->setText("");
+}
+
+void MainWindow::on_createOperationPushButton_clicked()
+{
+    bool expense = false;
+    bool income = false;
+
+    if (ui->expenseOperationRadioButton->isChecked()){
+        expense = true;
+    }
+    if(ui->incomeOperationRadioButton->isChecked()){
+        income = true;
+    }
+    if(expense == false && income == false){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Please, select operation type (income | expense).", 10000);
+        return;
+    }
+
+    int value = ui->newOperationValue->value();
+
+    QString desc = ui->newOperationDesc->text();
+
+    // Getting category ID from database
+
+    QString categoryName = ui->newOperationCategory->text();
+    QSqlQuery query;
+    query.prepare("SELECT id FROM categories WHERE name = ? AND user_id = ? AND expense = ? AND income = ?");
+    query.addBindValue(categoryName);
+    query.addBindValue(currentUserId);
+    query.addBindValue(expense);
+    query.addBindValue(income);
+    query.exec();
+    int categoryId = 0;
+    while (query.next()){
+        categoryId = query.value(0).toInt();
+    }
+
+    if(categoryId == 0){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Category with entered name does not exist. Please, try again.", 10000);
+        ui->newOperationCategory->setText("");
+        return;
+    }
+
+    DatabaseConnector::createOperation(categoryId, value, currentUserId, desc);
+    ui->statusbar->setStyleSheet("color: #008000");
+    ui->statusbar->showMessage("Created new operation successfully", 10000);
+
+    // Clearing input fields
+
+    ui->newOperationCategory->setText("");
+    ui->newOperationValue->setValue(0);
+    ui->newOperationDesc->setText("");
+}
+
+void MainWindow::on_updateOperationPushButton_clicked()
+{
+    auto id = ui->updOperationID->value();
+    auto desc = ui->updOperationDesc->text();
+    auto value = ui->updOperationValue->value();
+
+    // Validating input
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM operations WHERE id = ? AND user_id = ?");
+    query.addBindValue(id);
+    query.addBindValue(currentUserId);
+    query.exec();
+    if(query.next()){
+        DatabaseConnector::updateOperation(id, value, desc);
+
+        ui->statusbar->setStyleSheet("color: #008000");
+        ui->statusbar->showMessage("Updated selected operation successfully", 10000);
+
+        // Clearing input fields
+
+        ui->updOperationValue->setValue(0);
+        ui->updOperationDesc->setText("");
+        ui->updOperationID->setValue(0);
+    } else {
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Operation with entered ID does not exist. Please, try again", 10000);
+    }
+}
+
+void MainWindow::on_deleteOperationPushButton_clicked()
+{
+    auto id = ui->deleteOperationID->value();
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM operations WHERE id = ? AND user_id = ?");
+    query.addBindValue(id);
+    query.addBindValue(currentUserId);
+    query.exec();
+    if (query.next()){
+        DatabaseConnector::removeOperation(id);
+
+        ui->statusbar->setStyleSheet("color: #008000");
+        ui->statusbar->showMessage("Deleted selected operation successfully", 10000);
+
+        // Clearing input fields
+
+        ui->deleteOperationID->setValue(0);
+    } else {
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Operation with entered ID does not exist. Please, try again", 10000);
+    }
 }

@@ -27,6 +27,12 @@ private slots:
 
     void on_registerPushButton_clicked();
 
+    void on_createOperationPushButton_clicked();
+
+    void on_updateOperationPushButton_clicked();
+
+    void on_deleteOperationPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     int currentUserId;
