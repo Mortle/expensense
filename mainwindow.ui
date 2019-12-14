@@ -23,7 +23,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="main">
        <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -42,7 +42,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>3</number>
+           <number>1</number>
           </property>
           <property name="usesScrollButtons">
            <bool>false</bool>
@@ -65,7 +65,20 @@
            </attribute>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QTableView" name="operationsTableView"/>
+             <widget class="QTableView" name="operationsTableView">
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustIgnored</enum>
+              </property>
+              <property name="showGrid">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+             </widget>
             </item>
             <item>
              <widget class="QWidget" name="widget" native="true">
@@ -259,10 +272,30 @@
            </attribute>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
-             <widget class="QTableView" name="expenseTableView"/>
+             <widget class="QTableView" name="expenseTableView">
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+             </widget>
             </item>
             <item>
-             <widget class="QTableView" name="incomeTableView"/>
+             <widget class="QTableView" name="incomeTableView">
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+             </widget>
             </item>
            </layout>
           </widget>

@@ -20,16 +20,31 @@ void MainWindow::refreshData()
 {
     // Updating models and tableViews
 
-    auto incomeQuery = QStringLiteral("SELECT name, description, created_at FROM categories WHERE income = 1 AND user_id = %1").arg(currentUserId);
-    auto expenseQuery = QStringLiteral("SELECT name, description, created_at FROM categories WHERE income = 0 AND user_id = %1").arg(currentUserId);
+    auto incomeQuery = QStringLiteral("SELECT name, description FROM categories WHERE income = 1 AND user_id = %1").arg(currentUserId);
+    auto expenseQuery = QStringLiteral("SELECT name, description FROM categories WHERE income = 0 AND user_id = %1").arg(currentUserId);
     auto usersQuery = QStringLiteral("SELECT * FROM users");
-    auto operationsQuery = QStringLiteral("SELECT * FROM operations WHERE user_id = %1").arg(currentUserId);
+    auto operationsQuery = QStringLiteral("SELECT id, category_id, value, created_at, description FROM operations WHERE user_id = %1").arg(currentUserId);
 
     DatabaseConnector db(usersQuery, incomeQuery, expenseQuery, operationsQuery);
 
-    ui->incomeTableView->setModel(db.getIncomeModel());
-    ui->expenseTableView->setModel(db.getExpenseModel());
-    ui->operationsTableView->setModel(db.getOperationsModel());
+    auto operationsModel = db.getOperationsModel();
+    operationsModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    operationsModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Category"));
+    operationsModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Value, $"));
+    operationsModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Date"));
+    operationsModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Description"));
+
+    auto incomeModel = db.getIncomeModel();
+    incomeModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Name"));
+    incomeModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Description"));
+
+    auto expenseModel = db.getExpenseModel();
+    expenseModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Name"));
+    expenseModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Description"));
+
+    ui->operationsTableView->setModel(operationsModel);
+    ui->expenseTableView->setModel(expenseModel);
+    ui->incomeTableView->setModel(incomeModel);
 }
 
 void MainWindow::on_loginPushButton_clicked()
