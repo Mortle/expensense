@@ -61,7 +61,7 @@ void DatabaseConnector::removeCategory(int id) {
     q.exec();
 }
 
-QVariant DatabaseConnector::createOperation(int category_id, int value, int user_id, const QString &description) {
+QVariant DatabaseConnector::createOperation(int category_id, double value, int user_id, const QString &description) {
     QSqlQuery q;
     q.prepare("insert into operations(category_id, user_id, value, description, created_at) values(?, ?, ?, ?, ?)");
     q.addBindValue(category_id);
@@ -75,7 +75,7 @@ QVariant DatabaseConnector::createOperation(int category_id, int value, int user
     return q.lastInsertId();
 }
 
-void DatabaseConnector::updateOperation(int id, int value, const QString &description) {
+void DatabaseConnector::updateOperation(int id, double value, const QString &description) {
     QSqlQuery q;
     q.prepare("UPDATE operations SET description= ?, value = ? WHERE id = ?");
     q.addBindValue(description);

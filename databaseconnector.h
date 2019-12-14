@@ -20,8 +20,8 @@ public:
     static QVariant createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
     static void updateCategory(int id, const QString &name, const QString &description);
     static void removeCategory(int id);
-    static QVariant createOperation(int category_id, int value, int user_id, const QString &description);
-    static void updateOperation(int id, int value, const QString &description);
+    static QVariant createOperation(int category_id, double value, int user_id, const QString &description);
+    static void updateOperation(int id, double value, const QString &description);
     static void removeOperation(int id);
 
     QSqlQueryModel* getIncomeModel();

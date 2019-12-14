@@ -111,7 +111,7 @@ void MainWindow::on_createOperationPushButton_clicked()
         return;
     }
 
-    int value = ui->newOperationValue->value();
+    double value = ui->newOperationValue->value();
 
     QString desc = ui->newOperationDesc->text();
 

@@ -23,7 +23,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="main">
        <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -42,7 +42,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="usesScrollButtons">
            <bool>false</bool>
@@ -136,12 +136,9 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="newOperationValue">
-                    <property name="prefix">
-                     <string/>
-                    </property>
+                   <widget class="QDoubleSpinBox" name="newOperationValue">
                     <property name="maximum">
-                     <number>1000000000</number>
+                     <double>1000000000.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -196,9 +193,9 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="updOperationValue">
+                   <widget class="QDoubleSpinBox" name="updOperationValue">
                     <property name="maximum">
-                     <number>1000000000</number>
+                     <double>1000000000.000000000000000</double>
                     </property>
                    </widget>
                   </item>
@@ -475,7 +472,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+    </font>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
