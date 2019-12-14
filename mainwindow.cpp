@@ -8,24 +8,28 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    refreshData();
+}
 
-    // Adding model-views
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
 
-    auto incomeQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 1");
-    auto expenseQuery = QLatin1String("SELECT name, description, created_at FROM categories WHERE income = 0");
-    auto usersQuery = QLatin1String("SELECT * FROM users");
-    auto operationsQuery = QLatin1String("SELECT * FROM operations");
+void MainWindow::refreshData()
+{
+    // Updating models and tableViews
+
+    auto incomeQuery = QStringLiteral("SELECT name, description, created_at FROM categories WHERE income = 1 AND user_id = %1").arg(currentUserId);
+    auto expenseQuery = QStringLiteral("SELECT name, description, created_at FROM categories WHERE income = 0 AND user_id = %1").arg(currentUserId);
+    auto usersQuery = QStringLiteral("SELECT * FROM users");
+    auto operationsQuery = QStringLiteral("SELECT * FROM operations WHERE user_id = %1").arg(currentUserId);
 
     DatabaseConnector db(usersQuery, incomeQuery, expenseQuery, operationsQuery);
 
     ui->incomeTableView->setModel(db.getIncomeModel());
     ui->expenseTableView->setModel(db.getExpenseModel());
     ui->operationsTableView->setModel(db.getOperationsModel());
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void MainWindow::on_loginPushButton_clicked()
@@ -45,6 +49,8 @@ void MainWindow::on_loginPushButton_clicked()
 
     ui->loginUsername->setText("");
     ui->loginPassword->setText("");
+
+    refreshData();
 }
 
 void MainWindow::on_logoutPushButton_clicked()
@@ -125,6 +131,8 @@ void MainWindow::on_createOperationPushButton_clicked()
     ui->newOperationCategory->setText("");
     ui->newOperationValue->setValue(0);
     ui->newOperationDesc->setText("");
+
+    refreshData();
 }
 
 void MainWindow::on_updateOperationPushButton_clicked()
@@ -155,6 +163,8 @@ void MainWindow::on_updateOperationPushButton_clicked()
         ui->statusbar->setStyleSheet("color: #ff0000");
         ui->statusbar->showMessage("Operation with entered ID does not exist. Please, try again", 10000);
     }
+
+    refreshData();
 }
 
 void MainWindow::on_deleteOperationPushButton_clicked()
@@ -179,4 +189,6 @@ void MainWindow::on_deleteOperationPushButton_clicked()
         ui->statusbar->setStyleSheet("color: #ff0000");
         ui->statusbar->showMessage("Operation with entered ID does not exist. Please, try again", 10000);
     }
+
+    refreshData();
 }

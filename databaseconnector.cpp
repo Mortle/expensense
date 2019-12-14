@@ -1,7 +1,7 @@
 #include "databaseconnector.h"
 
-DatabaseConnector::DatabaseConnector(QLatin1String usersQuery, QLatin1String incomeQuery,
-                                     QLatin1String expenseQuery, QLatin1String operationsQuery) {
+DatabaseConnector::DatabaseConnector(QString usersQuery, QString incomeQuery,
+                                     QString expenseQuery, QString operationsQuery) {
     usersModel = new QSqlQueryModel;
     usersModel->setQuery(usersQuery);
     incomeModel = new QSqlQueryModel;

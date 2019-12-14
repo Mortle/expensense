@@ -20,6 +20,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void refreshData();
+
 private slots:
     void on_loginPushButton_clicked();
 

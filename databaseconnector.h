@@ -13,8 +13,8 @@ private:
     QSqlQueryModel *operationsModel;
 
 public:
-    DatabaseConnector(QLatin1String usersQuery, QLatin1String incomeQuery,
-                      QLatin1String expenseQuery, QLatin1String operationsQuery);
+    DatabaseConnector(QString usersQuery, QString incomeQuery,
+                      QString expenseQuery, QString operationsQuery);
 
     static QVariant createUser(const QString &username, const QString &password);
     static QVariant createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
