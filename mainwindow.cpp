@@ -23,7 +23,7 @@ void MainWindow::refreshData()
     auto incomeQuery = QStringLiteral("SELECT name, description FROM categories WHERE income = 1 AND user_id = %1").arg(currentUserId);
     auto expenseQuery = QStringLiteral("SELECT name, description FROM categories WHERE income = 0 AND user_id = %1").arg(currentUserId);
     auto usersQuery = QStringLiteral("SELECT * FROM users");
-    auto operationsQuery = QStringLiteral("SELECT id, category_id, value, created_at, description FROM operations WHERE user_id = %1").arg(currentUserId);
+    auto operationsQuery = QStringLiteral("SELECT id, category, value, created_at, description FROM operations WHERE user_id = %1").arg(currentUserId);
 
     DatabaseConnector db(usersQuery, incomeQuery, expenseQuery, operationsQuery);
 
@@ -115,29 +115,28 @@ void MainWindow::on_createOperationPushButton_clicked()
 
     QString desc = ui->newOperationDesc->text();
 
-    // Getting category ID from database
-
     QString categoryName = ui->newOperationCategory->text();
-    QSqlQuery query;
-    query.prepare("SELECT id FROM categories WHERE name = ? AND user_id = ? AND expense = ? AND income = ?");
-    query.addBindValue(categoryName);
-    query.addBindValue(currentUserId);
-    query.addBindValue(expense);
-    query.addBindValue(income);
-    query.exec();
-    int categoryId = 0;
-    while (query.next()){
-        categoryId = query.value(0).toInt();
-    }
 
-    if(categoryId == 0){
+    // Category existence check
+
+    bool exists = false;
+    QSqlQuery query;
+    query.prepare("SELECT name FROM categories WHERE user_id = ?");
+    query.addBindValue(currentUserId);
+    query.exec();
+    while(query.next()){
+        if(categoryName == query.value(0).toString()){
+            exists = true;
+        }
+    }
+    if(exists == false){
         ui->statusbar->setStyleSheet("color: #ff0000");
         ui->statusbar->showMessage("Category with entered name does not exist. Please, try again.", 10000);
         ui->newOperationCategory->setText("");
         return;
     }
 
-    DatabaseConnector::createOperation(categoryId, value, currentUserId, desc);
+    DatabaseConnector::createOperation(categoryName, value, currentUserId, desc);
     ui->statusbar->setStyleSheet("color: #008000");
     ui->statusbar->showMessage("Created new operation successfully", 10000);
 

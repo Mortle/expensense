@@ -8,7 +8,7 @@ DatabaseCreator::DatabaseCreator()
         )");
 
     createOperationsTableSql = QLatin1String(R"(
-        create table operations(id integer primary key, category_id integer, user_id integer,
+        create table operations(id integer primary key, category varchar, user_id integer,
                                 value float, description varchar, created_at varchar)
         )");
 

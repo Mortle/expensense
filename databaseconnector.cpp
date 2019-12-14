@@ -61,10 +61,10 @@ void DatabaseConnector::removeCategory(int id) {
     q.exec();
 }
 
-QVariant DatabaseConnector::createOperation(int category_id, double value, int user_id, const QString &description) {
+QVariant DatabaseConnector::createOperation(const QString &categoryName, double value, int user_id, const QString &description) {
     QSqlQuery q;
-    q.prepare("insert into operations(category_id, user_id, value, description, created_at) values(?, ?, ?, ?, ?)");
-    q.addBindValue(category_id);
+    q.prepare("insert into operations(category, user_id, value, description, created_at) values(?, ?, ?, ?, ?)");
+    q.addBindValue(categoryName);
     q.addBindValue(user_id);
     q.addBindValue(value);
     q.addBindValue(description);
@@ -127,83 +127,6 @@ bool DatabaseConnector::validateUser(const QString &username, const QString &pas
     } else {
         return false;
     }
-}
-
-bool DatabaseConnector::validateCategory(const QString &name, int user_id, bool expense, bool income, const QString &description) {
-    // Avoid category duplication
-
-    QSqlQuery query;
-    query.exec("SELECT name, user_id, expense, income FROM categories");
-    while(query.next()) {
-        QString _name = query.value(0).toString();
-        int _user_id = query.value(1).toInt();
-        bool _expense = query.value(2).toInt();
-        bool _income = query.value(3).toInt();
-
-        if (!QString::compare(name, _name) && user_id == _user_id
-            && expense == _expense && income == _income) {
-            return false;
-        }
-    }
-
-    // User existence validation
-
-    query.exec("SELECT id FROM users");
-    bool exists = false;
-    while(query.next()) {
-        int _id = query.value(0).toInt();
-        if (user_id == _id)
-            exists = true;
-    }
-    if (exists == false)
-        return false;
-
-    // Name & Description text validation
-
-    if(name.length() < 16 && name.length() > 0 &&
-       description.length() < 128) {
-    } else {
-        return false;
-    }
-
-    return true;
-}
-
-bool DatabaseConnector::validateOperation(int category_id, int value, int user_id, const QString &description) {
-    // Category existence validation
-
-    QSqlQuery query;
-    query.exec("SELECT id FROM categories");
-    bool exists = false;
-    while(query.next()) {
-        int _id = query.value(0).toInt();
-        if (category_id == _id)
-            exists = true;
-    }
-    if (exists == false)
-        return false;
-
-    // User existence validation
-
-    query.exec("SELECT id FROM users");
-    exists = false;
-    while(query.next()) {
-        int _id = query.value(0).toInt();
-        if (user_id == _id)
-            exists = true;
-    }
-    if (exists == false)
-        return false;
-
-
-    // Value & Description data validation
-
-    if(value > 0 && description.length() < 32) {
-    } else {
-        return false;
-    }
-
-    return true;
 }
 
 int DatabaseConnector::signIn(const QString &username, const QString &password)

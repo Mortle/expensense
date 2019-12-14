@@ -20,7 +20,7 @@ public:
     static QVariant createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
     static void updateCategory(int id, const QString &name, const QString &description);
     static void removeCategory(int id);
-    static QVariant createOperation(int category_id, double value, int user_id, const QString &description);
+    static QVariant createOperation(const QString &categoryName, double value, int user_id, const QString &description);
     static void updateOperation(int id, double value, const QString &description);
     static void removeOperation(int id);
 
@@ -30,8 +30,6 @@ public:
     QSqlQueryModel* getOperationsModel();
 
     static bool validateUser(const QString &username, const QString &password);
-    static bool validateCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
-    static bool validateOperation(int category_id, int value, int user_id, const QString &description);
 
     static int signIn(const QString &username, const QString &password);
 };
