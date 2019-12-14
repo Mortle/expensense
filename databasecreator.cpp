@@ -49,16 +49,14 @@ QSqlError DatabaseCreator::initializeDatabase(QString dbName) {
 
     // Seeding db with sample data
 
-    DatabaseConnector::createUser(QLatin1String("Dmitry Osipov"), QLatin1String("AMz6J34Mg&zJ9@MC"));
-    DatabaseConnector::createUser(QLatin1String("Alexander Vinogradov"), QLatin1String("boomer"));
-    DatabaseConnector::createUser(QLatin1String("Valery Duleba"), QLatin1String("e3LQ6T&Eh6kp-J&6"));
+    DatabaseConnector::createUser(QLatin1String("test"), QLatin1String("test"));
 
     DatabaseConnector::createCategory(QLatin1String("Other"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Cafe"), 2, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Rent"), 3, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Cafe"), 1, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Rent"), 1, true, false, QLatin1String(""));
     DatabaseConnector::createCategory(QLatin1String("Food"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Entertainment"), 2, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Salary"), 3, false, true, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Entertainment"), 1, true, false, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Salary"), 1, false, true, QLatin1String(""));
     DatabaseConnector::createCategory(QLatin1String("Scholarship"), 1, false, true, QLatin1String(""));
 
     return QSqlError();
