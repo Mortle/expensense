@@ -20,7 +20,9 @@ QVariant DatabaseConnector::createUser(const QString &username, const QString &p
     q.prepare(sql);
     q.addBindValue(username);
     q.addBindValue(password);
-    q.addBindValue(QDateTime::currentDateTime().toString());
+    auto dateTime = QDateTime::currentDateTime();
+    QString dateTimeUnlocalized = QLocale{QLocale::English}.toString(dateTime, "yyyy-MM-dd");
+    q.addBindValue(dateTimeUnlocalized);
     q.exec();
     return q.lastInsertId();
 }
@@ -36,7 +38,9 @@ QVariant DatabaseConnector::createCategory(const QString &name, int user_id, boo
     q.addBindValue(expense);
     q.addBindValue(income);
     q.addBindValue(description);
-    q.addBindValue(QDateTime::currentDateTime().toString());
+    auto dateTime = QDateTime::currentDateTime();
+    QString dateTimeUnlocalized = QLocale{QLocale::English}.toString(dateTime, "yyyy-MM-dd");
+    q.addBindValue(dateTimeUnlocalized);
     q.exec();
     return q.lastInsertId();
 }
@@ -64,7 +68,9 @@ QVariant DatabaseConnector::createOperation(int category_id, int value, int user
     q.addBindValue(user_id);
     q.addBindValue(value);
     q.addBindValue(description);
-    q.addBindValue(QDateTime::currentDateTime().toString());
+    auto dateTime = QDateTime::currentDateTime();
+    QString dateTimeUnlocalized = QLocale{QLocale::English}.toString(dateTime, "yyyy-MM-dd");
+    q.addBindValue(dateTimeUnlocalized);
     q.exec();
     return q.lastInsertId();
 }
