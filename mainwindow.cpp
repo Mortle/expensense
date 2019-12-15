@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    auto logoutPushButton = new QPushButton("Log Out");
+    ui->tabWidget->setCornerWidget(logoutPushButton);
+    QObject::connect(logoutPushButton, SIGNAL(clicked()), this, SLOT(logoutPushButton_clicked()));
+
     refreshData();
 }
 
@@ -68,7 +73,7 @@ void MainWindow::on_loginPushButton_clicked()
     refreshData();
 }
 
-void MainWindow::on_logoutPushButton_clicked()
+void MainWindow::logoutPushButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }

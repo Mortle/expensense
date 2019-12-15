@@ -25,7 +25,7 @@ public:
 private slots:
     void on_loginPushButton_clicked();
 
-    void on_logoutPushButton_clicked();
+    void logoutPushButton_clicked();
 
     void on_registerPushButton_clicked();
 
