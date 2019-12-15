@@ -88,7 +88,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QWidget" name="widget" native="true">
+             <widget class="QWidget" name="operationsMenu" native="true">
               <property name="maximumSize">
                <size>
                 <width>700</width>
@@ -97,7 +97,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_3">
                <item>
-                <widget class="QGroupBox" name="groupBox">
+                <widget class="QGroupBox" name="createOperationGroupBox">
                  <property name="title">
                   <string>Create new operation</string>
                  </property>
@@ -106,7 +106,7 @@
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_4">
                   <item>
-                   <widget class="QWidget" name="widget_2" native="true">
+                   <widget class="QWidget" name="categoryTypePicker" native="true">
                     <layout class="QHBoxLayout" name="horizontalLayout_4">
                      <item>
                       <widget class="QRadioButton" name="expenseOperationRadioButton">
@@ -126,7 +126,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_11">
+                   <widget class="QLabel" name="categoryName">
                     <property name="text">
                      <string>Category name</string>
                     </property>
@@ -136,7 +136,7 @@
                    <widget class="QLineEdit" name="newOperationCategory"/>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_7">
+                   <widget class="QLabel" name="value">
                     <property name="text">
                      <string>Value:</string>
                     </property>
@@ -150,7 +150,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_8">
+                   <widget class="QLabel" name="description">
                     <property name="text">
                      <string>Description (can be blank)</string>
                     </property>
@@ -170,7 +170,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_3">
+                <widget class="QGroupBox" name="editOperationGroupBox">
                  <property name="title">
                   <string>Edit operation</string>
                  </property>
@@ -179,7 +179,7 @@
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_5">
                   <item>
-                   <widget class="QLabel" name="label_12">
+                   <widget class="QLabel" name="operationId">
                     <property name="text">
                      <string>Operation ID</string>
                     </property>
@@ -193,7 +193,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_9">
+                   <widget class="QLabel" name="updatedValue">
                     <property name="text">
                      <string>Updated value</string>
                     </property>
@@ -207,7 +207,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_10">
+                   <widget class="QLabel" name="updatedDescription">
                     <property name="text">
                      <string>Updated description</string>
                     </property>
@@ -227,7 +227,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_2">
+                <widget class="QGroupBox" name="deleteOperationGroupBox">
                  <property name="title">
                   <string>Delete operation</string>
                  </property>
@@ -236,7 +236,7 @@
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_2">
                   <item>
-                   <widget class="QLabel" name="label_6">
+                   <widget class="QLabel" name="id">
                     <property name="maximumSize">
                      <size>
                       <width>20</width>
@@ -296,16 +296,16 @@ font-size: 13pt;</string>
                 <widget class="QWidget" name="createExpCategoryWidget" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_6">
                   <item>
-                   <widget class="QGroupBox" name="groupBox_4">
+                   <widget class="QGroupBox" name="createECategory">
                     <property name="title">
                      <string>Add expense category</string>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_5">
                      <item>
-                      <widget class="QWidget" name="widget_5" native="true">
+                      <widget class="QWidget" name="nameInput" native="true">
                        <layout class="QVBoxLayout" name="verticalLayout_8">
                         <item>
-                         <widget class="QLabel" name="label_13">
+                         <widget class="QLabel" name="name">
                           <property name="text">
                            <string>Name</string>
                           </property>
@@ -331,10 +331,10 @@ font-size: 13pt;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QWidget" name="widget_6" native="true">
+                      <widget class="QWidget" name="descInput" native="true">
                        <layout class="QVBoxLayout" name="verticalLayout_9">
                         <item>
-                         <widget class="QLabel" name="label_17">
+                         <widget class="QLabel" name="description_2">
                           <property name="text">
                            <string>Description</string>
                           </property>
@@ -363,13 +363,13 @@ font-size: 13pt;</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QGroupBox" name="groupBox_5">
+                   <widget class="QGroupBox" name="deleteECategory">
                     <property name="title">
                      <string>Delete expense category</string>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_6">
                      <item>
-                      <widget class="QLabel" name="label_16">
+                      <widget class="QLabel" name="name_2">
                        <property name="text">
                         <string>Name</string>
                        </property>
@@ -415,16 +415,16 @@ font-size: 13pt;</string>
                 <widget class="QWidget" name="createIncCategoryWidget" native="true">
                  <layout class="QVBoxLayout" name="verticalLayout_10">
                   <item>
-                   <widget class="QGroupBox" name="groupBox_8">
+                   <widget class="QGroupBox" name="createICategory">
                     <property name="title">
                      <string>Add income category</string>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_10">
                      <item>
-                      <widget class="QWidget" name="widget_7" native="true">
+                      <widget class="QWidget" name="nameInput_2" native="true">
                        <layout class="QVBoxLayout" name="verticalLayout_11">
                         <item>
-                         <widget class="QLabel" name="label_18">
+                         <widget class="QLabel" name="name_3">
                           <property name="text">
                            <string>Name</string>
                           </property>
@@ -450,10 +450,10 @@ font-size: 13pt;</string>
                       </widget>
                      </item>
                      <item>
-                      <widget class="QWidget" name="widget_8" native="true">
+                      <widget class="QWidget" name="descInput_2" native="true">
                        <layout class="QVBoxLayout" name="verticalLayout_12">
                         <item>
-                         <widget class="QLabel" name="label_19">
+                         <widget class="QLabel" name="description_3">
                           <property name="text">
                            <string>Description</string>
                           </property>
@@ -482,13 +482,13 @@ font-size: 13pt;</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QGroupBox" name="groupBox_9">
+                   <widget class="QGroupBox" name="deleteICategory">
                     <property name="title">
                      <string>Delete income category</string>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
                      <item>
-                      <widget class="QLabel" name="label_20">
+                      <widget class="QLabel" name="name_4">
                        <property name="text">
                         <string>Name</string>
                        </property>
@@ -551,7 +551,7 @@ font-size: 13pt;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="username">
                <property name="text">
                 <string>Username</string>
                </property>
@@ -561,7 +561,7 @@ font-size: 13pt;</string>
               <widget class="QLineEdit" name="loginUsername"/>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="password">
                <property name="text">
                 <string>Password</string>
                </property>
@@ -600,7 +600,7 @@ font-size: 13pt;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <widget class="QLabel" name="label_3">
+              <widget class="QLabel" name="username_2">
                <property name="text">
                 <string>Username</string>
                </property>
@@ -610,7 +610,7 @@ font-size: 13pt;</string>
               <widget class="QLineEdit" name="registerUsername"/>
              </item>
              <item>
-              <widget class="QLabel" name="label_4">
+              <widget class="QLabel" name="password_2">
                <property name="text">
                 <string>Password</string>
                </property>
@@ -624,7 +624,7 @@ font-size: 13pt;</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="confirmPassword">
                <property name="text">
                 <string>Confirm password</string>
                </property>
