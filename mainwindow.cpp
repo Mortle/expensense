@@ -206,3 +206,151 @@ void MainWindow::on_deleteOperationPushButton_clicked()
 
     refreshData();
 }
+
+void MainWindow::on_createExpCategoryPushButton_clicked()
+{
+    auto desc = ui->createECategoryDesc->toPlainText();
+    auto name = ui->createECategoryName->text();
+
+    if(name.isEmpty()){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Entered category name is not valid. Please, try again", 10000);
+        return;
+    }
+
+    // Check if category with entered name already exists
+
+    QSqlQuery query;
+    query.prepare("SELECT name FROM categories WHERE user_id = ?");
+    query.addBindValue(currentUserId);
+    query.exec();
+    while(query.next()){
+        auto name_ = query.value(0).toString();
+        if(name == name_){
+            ui->statusbar->setStyleSheet("color: #ff0000");
+            ui->statusbar->showMessage("Category with entered name already exists. Please, try again", 10000);
+            return;
+        }
+    }
+
+    DatabaseConnector::createCategory(name, currentUserId, true, false, desc);
+
+    ui->statusbar->setStyleSheet("color: #008000");
+    ui->statusbar->showMessage("Created new category successfully", 10000);
+
+    // Clearing input fields
+
+    ui->createECategoryName->setText("");
+    ui->createECategoryDesc->setPlainText("");
+
+    refreshData();
+}
+
+void MainWindow::on_removeExpCategoryPushButton_clicked()
+{
+    auto name = ui->removeECategoryName->text();
+
+    QSqlQuery query;
+    query.prepare("SELECT name FROM categories WHERE user_id = ? AND expense = ?");
+    query.addBindValue(currentUserId);
+    query.addBindValue(true);
+    query.exec();
+    bool found = false;
+    while(query.next()){
+        auto name_ = query.value(0).toString();
+        if(name == name_){
+            DatabaseConnector::removeCategory(name, currentUserId);
+            found = true;
+            break;
+        }
+    }
+
+    if(found == false){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Category with entered name does not exist. Please, try again", 10000);
+        return;
+    }
+
+    ui->statusbar->setStyleSheet("color: #008000");
+    ui->statusbar->showMessage("Deleted category successfully", 10000);
+
+    // Clearing input fields
+
+    ui->removeECategoryName->setText("");
+
+    refreshData();
+}
+
+void MainWindow::on_createIncCategoryPushButton_clicked()
+{
+    auto desc = ui->createICategoryDesc->toPlainText();
+    auto name = ui->createICategoryName->text();
+
+    if(name.isEmpty()){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Entered category name is not valid. Please, try again", 10000);
+        return;
+    }
+
+    // Check if category with entered name already exists
+
+    QSqlQuery query;
+    query.prepare("SELECT name FROM categories WHERE user_id = ?");
+    query.addBindValue(currentUserId);
+    query.exec();
+    while(query.next()){
+        auto name_ = query.value(0).toString();
+        if(name == name_){
+            ui->statusbar->setStyleSheet("color: #ff0000");
+            ui->statusbar->showMessage("Category with entered name already exists. Please, try again", 10000);
+            return;
+        }
+    }
+
+    DatabaseConnector::createCategory(name, currentUserId, false, true, desc);
+
+    ui->statusbar->setStyleSheet("color: #008000");
+    ui->statusbar->showMessage("Created new category successfully", 10000);
+
+    // Clearing input fields
+
+    ui->createICategoryName->setText("");
+    ui->createICategoryDesc->setPlainText("");
+
+    refreshData();
+}
+
+void MainWindow::on_removeIncCategoryPushButton_clicked()
+{
+    auto name = ui->removeICategoryName->text();
+
+    QSqlQuery query;
+    query.prepare("SELECT name FROM categories WHERE user_id = ? AND income = ?");
+    query.addBindValue(currentUserId);
+    query.addBindValue(true);
+    query.exec();
+    bool found = false;
+    while(query.next()){
+        auto name_ = query.value(0).toString();
+        if(name == name_){
+            DatabaseConnector::removeCategory(name, currentUserId);
+            found = true;
+            break;
+        }
+    }
+
+    if(found == false){
+        ui->statusbar->setStyleSheet("color: #ff0000");
+        ui->statusbar->showMessage("Category with entered name does not exist. Please, try again", 10000);
+        return;
+    }
+
+    ui->statusbar->setStyleSheet("color: #008000");
+    ui->statusbar->showMessage("Deleted category successfully", 10000);
+
+    // Clearing input fields
+
+    ui->removeICategoryName->setText("");
+
+    refreshData();
+}

@@ -19,7 +19,7 @@ public:
     static QVariant createUser(const QString &username, const QString &password);
     static QVariant createCategory(const QString &name, int user_id, bool expense, bool income, const QString &description);
     static void updateCategory(int id, const QString &name, const QString &description);
-    static void removeCategory(int id);
+    static void removeCategory(const QString &name, int userId);
     static QVariant createOperation(const QString &categoryName, double value, int user_id, const QString &description);
     static void updateOperation(int id, double value, const QString &description);
     static void removeOperation(int id);

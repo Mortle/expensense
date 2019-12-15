@@ -35,6 +35,14 @@ private slots:
 
     void on_deleteOperationPushButton_clicked();
 
+    void on_createExpCategoryPushButton_clicked();
+
+    void on_removeExpCategoryPushButton_clicked();
+
+    void on_createIncCategoryPushButton_clicked();
+
+    void on_removeIncCategoryPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     int currentUserId;

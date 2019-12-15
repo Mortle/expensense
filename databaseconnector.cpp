@@ -54,10 +54,11 @@ void DatabaseConnector::updateCategory(int id, const QString &name, const QStrin
     q.exec();
 }
 
-void DatabaseConnector::removeCategory(int id) {
+void DatabaseConnector::removeCategory(const QString &name, int userId) {
     QSqlQuery q;
-    q.prepare("DELETE FROM categories WHERE id = ?");
-    q.addBindValue(id);
+    q.prepare("DELETE FROM categories WHERE name = ? AND user_id = ?");
+    q.addBindValue(name);
+    q.addBindValue(userId);
     q.exec();
 }
 
