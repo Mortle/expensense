@@ -1,13 +1,25 @@
 #include "mainwindow.h"
 #include "databaseconnector.h"
 #include "ui_mainwindow.h"
+
 #include <QtSql>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <QtCharts/QCategoryAxis>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QApplication::setFont(QFont("Lato Medium", 13));
+
+    // Adding logout push button
 
     auto logoutPushButton = new QPushButton("Log Out");
     ui->tabWidget->setCornerWidget(logoutPushButton);
@@ -50,6 +62,78 @@ void MainWindow::refreshData()
     ui->operationsTableView->setModel(operationsModel);
     ui->expenseTableView->setModel(expenseModel);
     ui->incomeTableView->setModel(incomeModel);
+
+    // Setting up statistics
+
+    QHash<QString, int> categories;
+    QSqlQuery query;
+
+    query.prepare("SELECT name FROM categories WHERE user_id = ?");
+    query.addBindValue(currentUserId);
+    query.exec();
+    while(query.next()){
+        auto category = query.value(0).toString();
+        categories[category] = 0;
+    }
+
+    // Maximum category $ value for graph Y rang
+    int maxValue = 0;
+
+    query.prepare("SELECT value, category FROM operations WHERE user_id = ?");
+    query.addBindValue(currentUserId);
+    query.exec();
+    while(query.next()){
+        auto category = query.value(1).toString();
+        categories[category] += query.value(0).toInt();
+
+        if(categories[category] > maxValue)
+            maxValue = categories[category];
+    }
+
+    auto *series = new QtCharts::QBarSeries();
+
+    QHashIterator<QString, int> i(categories);
+    while (i.hasNext()) {
+        i.next();
+        auto *set = new QtCharts::QBarSet(i.key());
+        *set << i.value();
+        series->append(set);
+    }
+
+    auto *chart = new QtCharts::QChart();
+    chart->addSeries(series);
+    chart->setTitle("Overview");
+    chart->setAnimationOptions(QtCharts::QChart::AllAnimations);
+
+    auto *axisX = new QtCharts::QBarCategoryAxis();
+    axisX->setLabelsVisible(false);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    auto *axisY = new QtCharts::QValueAxis();
+    axisY->setRange(0, maxValue * 1.3);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    auto *chartView = new QtCharts::QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    QPalette pal = qApp->palette();
+    pal.setColor(QPalette::Window, QRgb(0xffffff));
+    qApp->setPalette(pal);
+
+    // Updating chart view widget
+
+    QLayoutItem* item;
+    while ((item = ui->statisticsTab->layout()->takeAt(0)) != nullptr)
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    ui->statisticsTab->layout()->addWidget(chartView);
 }
 
 void MainWindow::on_loginPushButton_clicked()
