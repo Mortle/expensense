@@ -49,15 +49,26 @@ QSqlError DatabaseCreator::initializeDatabase(QString dbName) {
 
     // Seeding db with sample data
 
-    DatabaseConnector::createUser(QLatin1String("test"), QLatin1String("test"));
+    DatabaseConnector::createUser(QLatin1String("Alexander Vinogradov"), QLatin1String("test"));
 
-    DatabaseConnector::createCategory(QLatin1String("Other"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Cafe"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Rent"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Food"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Entertainment"), 1, true, false, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Salary"), 1, false, true, QLatin1String(""));
-    DatabaseConnector::createCategory(QLatin1String("Scholarship"), 1, false, true, QLatin1String(""));
+    DatabaseConnector::createCategory(QLatin1String("Savings"), 1, true, false, QLatin1String("Saving up money for Tesla Cybertruck"));
+    DatabaseConnector::createCategory(QLatin1String("Debt"), 1, true, false, QLatin1String("Lannisters always pay their debts"));
+    DatabaseConnector::createCategory(QLatin1String("Food"), 1, true, false, QLatin1String("Any nutritious substance that I eat or drink in order to maintain life and growth."));
+    DatabaseConnector::createCategory(QLatin1String("Rent"), 1, true, false, QLatin1String("Monthly rental fee"));
+    DatabaseConnector::createCategory(QLatin1String("Salary"), 1, false, true, QLatin1String("Programmer's monthly salary"));
+    DatabaseConnector::createCategory(QLatin1String("Scholarship"), 1, false, true, QLatin1String("University pays me pennies for my existence"));
+
+    DatabaseConnector::createOperation(QLatin1String("Savings"), 10.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Savings"), 15.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Salary"), 250.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Salary"), 300.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Scholarship"), 45.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Scholarship"), 50.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Food"), 14.44, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Food"), 12.33, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Food"), 1.01, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Debt"), 100.0, 1, QLatin1String(""));
+    DatabaseConnector::createOperation(QLatin1String("Rent"), 150.0, 1, QLatin1String(""));
 
     return QSqlError();
 }
